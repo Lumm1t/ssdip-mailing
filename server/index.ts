@@ -21,5 +21,5 @@ router.use('/scraper', scraper.routes())
 app.use(router.routes()).use(router.allowedMethods())
 
 app.listen(port, () => {
-  console.log(`Koa is listening in ${port}`)
+  console.log(`koa is listening in ${port}`)
 })
