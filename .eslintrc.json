@@ -1,0 +1,48 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "plugins": ["prettier", "eslint-plugin-import-helpers"],
+  "extends": [
+    "@nuxtjs/eslint-config-typescript",
+    "plugin:nuxt/recommended",
+    "prettier",
+    "plugin:sonarjs/recommended",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:vue-a11y/base",
+    "plugin:unicorn/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": "warn",
+    "prefer-const": "warn",
+    "no-console": "off",
+    "unicorn/no-abusive-eslint-disable": "off",
+    "vue/attribute-hyphenation": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/filename-case": [
+      "warn",
+      {
+        "cases": {
+          "pascalCase": true,
+          "kebabCase": true
+        }
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          "/^@shared/",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  }
+}
