@@ -3,7 +3,7 @@ import Koa from 'koa'
 import KoaBodyparser from 'koa-bodyparser'
 import KoaRouter from 'koa-router'
 
-import api from './routes/api'
+import scraper from './routes/scraper'
 
 const port = process.env.SERVER_PORT
 
@@ -16,7 +16,7 @@ app.on('error', (err: Error) => {
   console.log(`server error! ${err}`)
 })
 
-router.use('/api', api.routes())
+router.use('/scraper', scraper.routes())
 
 app.use(router.routes()).use(router.allowedMethods())
 
