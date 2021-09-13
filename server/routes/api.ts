@@ -4,6 +4,6 @@ import api from '../controllers/api'
 
 const router = new KoaRouter()
 
-router.get('/', api.main)
+router.post('/', api.main)
 
 export default router

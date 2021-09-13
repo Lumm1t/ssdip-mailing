@@ -1,5 +1,5 @@
 const main = (ctx: any) => {
-  ctx.body = 'Hello World!'
+  ctx.body = ctx.request.body
 }
 
 export default {
