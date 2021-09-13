@@ -44,4 +44,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-srcdir
+  srcDir: 'client/',
+
+  // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
+  tailwindcss: {
+    configPath: '~~/tailwind.config.js',
+  },
 }
