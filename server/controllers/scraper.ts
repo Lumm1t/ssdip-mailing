@@ -11,12 +11,49 @@ nightmare
   .then(() => console.log('nightmare ready'))
   .catch(error => console.error(error))
 
-const getLocations = async (ctx: any) => {
-  const data = await nightmare
-    .wait('h3.w_sz')
-    .evaluate(() => document.querySelector('h3.w_sz').textContent)
+const getLocation = (inputName: string): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    nightmare
+      .wait('form#SearchSubjectForm')
+      // @ts-ignore
+      .evaluate((inputName: string) => {
+        // @ts-ignore
+        return [...document.querySelector(`select[id*=${inputName}]`)].map(el =>
+          (el.textContent || 'all').toLowerCase()
+        )
+      }, inputName)
+      .then(resolve)
+      .catch(reject)
+  })
+}
 
-  ctx.body = data
+const locationThread = async (ctx: any) => {
+  const locationsInfo = [
+    {
+      name: 'state',
+      inputName: 'SearchStateId',
+    },
+    // {
+    //   name: 'substate',
+    //   inputName: 'SearchSubstateId',
+    // },
+    // {
+    //   name: 'community',
+    //   inputName: 'SearchCommunityName',
+    // },
+    // {
+    //   name: 'entity',
+    //   inputName: 'SearchAclgroupId',
+    // },
+  ]
+
+  const possibleLocations = {}
+  for (const { name, inputName } of locationsInfo) {
+    // @ts-ignore
+    answer[`${name}`] = await getLocation(inputName)
+  }
+
+  ctx.body = possibleLocations
 }
 
 const getSubjects = (ctx: any) => {
@@ -24,6 +61,6 @@ const getSubjects = (ctx: any) => {
 }
 
 export default {
-  getLocations,
+  locationThread,
   getSubjects,
 }
