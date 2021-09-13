@@ -29,8 +29,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    // https://go.nuxtjs.dev/vuetify
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -47,9 +47,4 @@ export default {
 
   // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-srcdir
   srcDir: 'client/',
-
-  // https://github.com/nuxt-community/tailwindcss-module/issues/114#issuecomment-698885369
-  tailwindcss: {
-    configPath: '~~/tailwind.config.js',
-  },
 }

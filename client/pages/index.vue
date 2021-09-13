@@ -1,3 +1,3 @@
 <template>
-  <div>Hello, World!</div>
+  <v-alert dense text type="success"> Hello world! </v-alert>
 </template>
