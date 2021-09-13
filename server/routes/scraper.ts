@@ -4,6 +4,7 @@ import scraper from '../controllers/scraper'
 
 const router = new KoaRouter()
 
-router.post('/', scraper.main)
+router.post('/locations', scraper.getLocations)
+router.post('/subjects', scraper.getSubjects)
 
 export default router
