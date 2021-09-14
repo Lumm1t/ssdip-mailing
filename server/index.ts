@@ -1,4 +1,5 @@
 import './env'
+import cors from '@koa/cors'
 import Koa from 'koa'
 import KoaBodyparser from 'koa-bodyparser'
 import KoaRouter from 'koa-router'
@@ -10,6 +11,7 @@ const port = process.env.SERVER_PORT
 const app = new Koa()
 const router = new KoaRouter()
 
+app.use(cors())
 app.use(KoaBodyparser())
 
 app.on('error', (err: Error) => {
