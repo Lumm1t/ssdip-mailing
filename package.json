@@ -24,7 +24,8 @@
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.1.1",
     "nightmare": "^3.0.2",
-    "nuxt": "^2.15.7"
+    "nuxt": "^2.15.7",
+    "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
