@@ -14,9 +14,10 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import { selectedLocations } from '../store'
+
 export default Vue.extend({
   data: () => ({
-    selectedLocations: [],
     availableLocations: [
       {
         name: 'state',
@@ -46,16 +47,19 @@ export default Vue.extend({
       if (selectedLocation !== 'init') {
         this.resetSelects(index)
 
-        this.selectedLocations[index] = selectedLocation || ''
+        selectedLocations.update({ index, selectedLocation })
       }
 
-      if (this.selectedLocations.length < this.availableLocations.length)
+      if (selectedLocations.length < this.availableLocations.length) {
+        console.log(selectedLocations.length, this.availableLocations.length)
+
         this.getAvailableLocations(index)
+      }
     },
     getAvailableLocations(index: number) {
       this.$axios
         .post('/scraper/locations', {
-          selectedLocations: this.selectedLocations,
+          selectedLocations: selectedLocations.locations,
         })
         .then(data => {
           if (data.data.success) {
@@ -64,7 +68,7 @@ export default Vue.extend({
         })
     },
     resetSelects(properPosition: number) {
-      this.selectedLocations.length = properPosition + 1
+      selectedLocations.resetDependent(properPosition + 1)
 
       for (const [index, location] of this.availableLocations.entries()) {
         if (index > properPosition) {
