@@ -17,8 +17,11 @@ const getLocation = (inputName: string): Promise<string[]> => {
       // @ts-ignore
       .evaluate((inputName: string) => {
         // @ts-ignore
-        return [...document.querySelector(`select[id*=${inputName}]`)].map(el =>
-          (el.textContent || 'all').toLowerCase()
+        return [...document.querySelector(`select[id*=${inputName}]`)].map(
+          el => ({
+            text: (el.textContent || 'all').toLowerCase(),
+            value: el.value.toLowerCase(),
+          })
         )
       }, inputName)
       .then(resolve)
