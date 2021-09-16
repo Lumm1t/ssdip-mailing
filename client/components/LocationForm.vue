@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-form>
     <LocationSelect
       v-for="(location, i) in availableLocations"
       :key="location.name"
@@ -8,7 +8,7 @@
       :index="i"
       @selected-location="updateSelect"
     />
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts">

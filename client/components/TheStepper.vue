@@ -27,7 +27,12 @@
 
         <v-btn v-if="!isStepFirst" @click="previousStep">Back</v-btn>
 
-        <v-btn v-if="!isStepLast" color="primary" @click="nextStep">
+        <v-btn
+          v-if="!isStepLast"
+          color="primary"
+          :disabled="!isLocationSelected"
+          @click="nextStep"
+        >
           Next
         </v-btn>
       </v-stepper-content>
@@ -37,6 +42,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
+import { selectedLocations } from '../store'
 
 export default Vue.extend({
   name: 'TheStepper',
@@ -51,6 +58,9 @@ export default Vue.extend({
     },
     isStepLast(): boolean {
       return this.currentStep === this.headers.length
+    },
+    isLocationSelected(): boolean {
+      return selectedLocations.length === 4
     },
   },
   methods: {
