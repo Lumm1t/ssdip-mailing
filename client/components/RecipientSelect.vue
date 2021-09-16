@@ -35,7 +35,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { selectedLocations } from '../store'
+import { selectedLocations, selectedRecipients } from '../store'
 
 export default Vue.extend({
   name: 'RecipientSelect',
@@ -60,6 +60,11 @@ export default Vue.extend({
     },
   },
   watch: {
+    selectedSubjects(subjects) {
+      selectedRecipients.update(subjects)
+
+      console.log(selectedRecipients.recipients)
+    },
     locations: {
       handler(selectedLocations) {
         if (selectedLocations.length === 4) {
@@ -74,7 +79,7 @@ export default Vue.extend({
       this.$nextTick(() => {
         this.selectedSubjects = this.selectedAll
           ? []
-          : [...this.availableSubjects]
+          : [...this.availableSubjects].map(subject => subject.email)
       })
     },
     getAvailableSubjects() {
