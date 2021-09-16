@@ -6,7 +6,7 @@ import KoaRouter from 'koa-router'
 
 import scraper from './routes/scraper'
 
-const port = process.env.SERVER_PORT
+const port = process.env.SERVER_PORT || 5000
 
 const app = new Koa()
 const router = new KoaRouter()
