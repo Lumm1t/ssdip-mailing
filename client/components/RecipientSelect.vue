@@ -35,7 +35,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { selectedLocations, selectedRecipients } from '../store'
+import { global, selectedLocations, emailData } from '../store'
 
 export default Vue.extend({
   name: 'RecipientSelect',
@@ -61,7 +61,7 @@ export default Vue.extend({
   },
   watch: {
     selectedSubjects(subjects) {
-      selectedRecipients.update(subjects)
+      emailData.updateRecipients(subjects)
     },
     locations: {
       handler(selectedLocations) {
@@ -81,10 +81,10 @@ export default Vue.extend({
       })
     },
     getAvailableSubjects() {
-      this.resetSelect()
+      this.resetRecipients()
 
-      selectedRecipients.waitForAvailableSubjects(true)
-      selectedRecipients.recipientsLoaded(false)
+      global.waitForAvailableSubjects(true)
+      global.recipientsLoaded(false)
 
       this.$axios
         .post('/scraper/subjects', {
@@ -94,14 +94,16 @@ export default Vue.extend({
           if (data.data.success) {
             this.availableSubjects = data.data.response
 
-            selectedRecipients.recipientsLoaded(true)
+            global.recipientsLoaded(true)
           } else alert(data.data.error)
 
-          selectedRecipients.waitForAvailableSubjects(false)
+          global.waitForAvailableSubjects(false)
         })
     },
-    resetSelect() {
+    resetRecipients() {
+      this.selectedSubjects = []
       this.availableSubjects = []
+      emailData.updateRecipients([])
     },
   },
 })

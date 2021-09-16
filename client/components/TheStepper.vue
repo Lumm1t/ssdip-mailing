@@ -44,7 +44,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { selectedLocations, selectedRecipients } from '../store'
+import { global, selectedLocations, emailData } from '../store'
 
 export default Vue.extend({
   name: 'TheStepper',
@@ -64,14 +64,16 @@ export default Vue.extend({
       return selectedLocations.length === 4
     },
     isLoading(): boolean {
-      return selectedRecipients.isWaitingForAvailableSubjects
+      return global.isWaitingForAvailableSubjects
     },
     areRecipientsLoaded(): boolean {
-      return selectedRecipients.areRecipientsLoaded
+      return global.areRecipientsLoaded
     },
   },
   methods: {
     nextStep() {
+      console.log(emailData.recipients)
+
       if (!this.isStepLast) this.currentStep++
     },
     previousStep() {

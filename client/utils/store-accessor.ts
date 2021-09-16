@@ -1,17 +1,20 @@
+/* eslint-disable import/no-mutable-exports */
+
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 
+import EmailData from '../store/email-data'
+import Global from '../store/global'
 import SelectedLocations from '../store/selected-locations'
-import SelectedRecipients from '../store/selected-recipients'
 
-// eslint-disable-next-line import/no-mutable-exports
+let global: Global
 let selectedLocations: SelectedLocations
-// eslint-disable-next-line import/no-mutable-exports
-let selectedRecipients: SelectedRecipients
+let emailData: EmailData
 
 function initialiseStores(store: Store<any>): void {
+  global = getModule(Global, store)
   selectedLocations = getModule(SelectedLocations, store)
-  selectedRecipients = getModule(SelectedRecipients, store)
+  emailData = getModule(EmailData, store)
 }
 
-export { initialiseStores, selectedLocations, selectedRecipients }
+export { initialiseStores, global, selectedLocations, emailData }

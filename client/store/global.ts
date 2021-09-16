@@ -1,20 +1,13 @@
-import Vue from 'vue'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 
 @Module({
-  name: 'selected-recipients',
+  name: 'global',
   stateFactory: true,
   namespaced: true,
 })
-export default class SelectedRecipients extends VuexModule {
-  selectedRecipients = [] as string[]
+export default class Global extends VuexModule {
   isWaitingForAvailableSubjects = false as boolean
   areRecipientsLoaded = false as boolean
-
-  @Mutation
-  update(recipients: string[]) {
-    Vue.set(this.selectedRecipients, 0, recipients)
-  }
 
   @Mutation
   waitForAvailableSubjects(isWaiting: boolean) {
@@ -24,13 +17,5 @@ export default class SelectedRecipients extends VuexModule {
   @Mutation
   recipientsLoaded(areLoaded: boolean) {
     this.areRecipientsLoaded = areLoaded
-  }
-
-  get recipients() {
-    return this.selectedRecipients
-  }
-
-  get length() {
-    return this.selectedRecipients.length
   }
 }
