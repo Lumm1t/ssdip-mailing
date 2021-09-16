@@ -4,6 +4,7 @@ import Koa from 'koa'
 import KoaBodyparser from 'koa-bodyparser'
 import KoaRouter from 'koa-router'
 
+import mailer from './routes/mailer'
 import scraper from './routes/scraper'
 
 const port = process.env.SERVER_PORT || 5000
@@ -19,6 +20,7 @@ app.on('error', (err: Error) => {
 })
 
 router.use('/scraper', scraper.routes())
+router.use('/mailer', mailer.routes())
 
 app.use(router.routes()).use(router.allowedMethods())
 
