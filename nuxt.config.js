@@ -18,8 +18,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
-
+  plugins: [
+    // https://github.com/iliyaZelenko/tiptap-vuetify-nuxt
+    { src: '~/plugins/tiptap-vuetify', mode: 'client' },
+  ],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -45,7 +47,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vuetify/lib', 'tiptap-vuetify'],
+  },
 
   // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-srcdir
   srcDir: 'client/',
