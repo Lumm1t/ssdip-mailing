@@ -1,9 +1,13 @@
 <template>
-  <div>Email form</div>
+  <v-form>
+    <RecipientSelect />
+  </v-form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'EmailForm',
-}
+})
 </script>
