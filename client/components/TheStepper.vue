@@ -72,8 +72,6 @@ export default Vue.extend({
   },
   methods: {
     nextStep() {
-      console.log(emailData.recipients)
-
       if (!this.isStepLast) this.currentStep++
     },
     previousStep() {
