@@ -8,11 +8,17 @@ import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 })
 export default class EmailData extends VuexModule {
   selectedRecipients = [] as string[]
+  emailTopic = '' as string
   emailBody = '' as string
 
   @Mutation
   updateRecipients(recipients: string[]) {
     Vue.set(this.selectedRecipients, 0, recipients)
+  }
+
+  @Mutation
+  updateTopic(topic: string) {
+    this.emailTopic = topic
   }
 
   @Mutation
@@ -24,11 +30,11 @@ export default class EmailData extends VuexModule {
     return this.selectedRecipients
   }
 
-  get body() {
-    return this.emailBody
+  get topic() {
+    return this.emailTopic
   }
 
-  get length() {
-    return this.selectedRecipients.length
+  get body() {
+    return this.emailBody
   }
 }

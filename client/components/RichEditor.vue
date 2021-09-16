@@ -1,7 +1,7 @@
 <template>
   <ClientOnly>
     <tiptap-vuetify
-      class="my-6"
+      class="mt-4 mb-8"
       :value="value"
       :extensions="extensions"
       placeholder="Write something..."
