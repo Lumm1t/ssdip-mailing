@@ -30,7 +30,8 @@
         <v-btn
           v-if="!isStepLast"
           color="primary"
-          :disabled="!isLocationSelected"
+          :disabled="!isLocationSelected || !areRecipientsLoaded"
+          :loading="isLoading"
           @click="nextStep"
         >
           Next
@@ -43,7 +44,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { selectedLocations } from '../store'
+import { selectedLocations, selectedRecipients } from '../store'
 
 export default Vue.extend({
   name: 'TheStepper',
@@ -61,6 +62,12 @@ export default Vue.extend({
     },
     isLocationSelected(): boolean {
       return selectedLocations.length === 4
+    },
+    isLoading(): boolean {
+      return selectedRecipients.isWaitingForAvailableSubjects
+    },
+    areRecipientsLoaded(): boolean {
+      return selectedRecipients.areRecipientsLoaded
     },
   },
   methods: {

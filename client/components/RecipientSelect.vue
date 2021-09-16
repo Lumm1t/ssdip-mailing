@@ -62,8 +62,6 @@ export default Vue.extend({
   watch: {
     selectedSubjects(subjects) {
       selectedRecipients.update(subjects)
-
-      console.log(selectedRecipients.recipients)
     },
     locations: {
       handler(selectedLocations) {
@@ -85,6 +83,9 @@ export default Vue.extend({
     getAvailableSubjects() {
       this.resetSelect()
 
+      selectedRecipients.waitForAvailableSubjects(true)
+      selectedRecipients.recipientsLoaded(false)
+
       this.$axios
         .post('/scraper/subjects', {
           selectedLocations: selectedLocations.locations,
@@ -92,7 +93,11 @@ export default Vue.extend({
         .then(data => {
           if (data.data.success) {
             this.availableSubjects = data.data.response
+
+            selectedRecipients.recipientsLoaded(true)
           } else alert(data.data.error)
+
+          selectedRecipients.waitForAvailableSubjects(false)
         })
     },
     resetSelect() {
