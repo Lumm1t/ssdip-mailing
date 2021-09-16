@@ -1,5 +1,5 @@
 <template>
   <v-form>
-    <LocationForm />
+    <TheStepper />
   </v-form>
 </template>
