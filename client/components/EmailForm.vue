@@ -11,13 +11,10 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { emailData, selectedLocations } from '../store'
+import { emailData } from '../store'
 
 export default Vue.extend({
   name: 'EmailForm',
-  data: () => ({
-    emailsSent: [],
-  }),
   computed: {
     topic: {
       get() {
@@ -49,7 +46,7 @@ export default Vue.extend({
         })
         .then(data => {
           if (data.data.success) {
-            this.emailsSent = data.data.response
+            emailData.setResponse(data.data.response)
           } else alert(data.data.error)
         })
     },

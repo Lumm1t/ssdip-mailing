@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 
+interface EmailsResponse {
+  email: string
+  status: string | Error
+}
+
 @Module({
   name: 'email-data',
   stateFactory: true,
@@ -10,6 +15,7 @@ export default class EmailData extends VuexModule {
   selectedRecipients = [] as string[]
   emailTopic = '' as string
   emailBody = '' as string
+  emailsResponse = [] as EmailsResponse[]
 
   @Mutation
   updateRecipients(recipients: string[]) {
@@ -26,6 +32,11 @@ export default class EmailData extends VuexModule {
     this.emailBody = body
   }
 
+  @Mutation
+  setResponse(response: EmailsResponse[]) {
+    this.emailsResponse = response
+  }
+
   get recipients() {
     return this.selectedRecipients
   }
@@ -36,5 +47,9 @@ export default class EmailData extends VuexModule {
 
   get body() {
     return this.emailBody
+  }
+
+  get response() {
+    return this.emailsResponse
   }
 }

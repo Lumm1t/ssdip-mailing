@@ -88,7 +88,7 @@ export default Vue.extend({
     writeEmailData(): boolean {
       this.$root.$emit('send-emails')
 
-      return false
+      return true
     },
   },
 })
