@@ -1,10 +1,16 @@
 import '../env'
 import nodemailer from 'nodemailer'
+import Mail from 'nodemailer/lib/mailer'
 
 interface Params {
   recipients: string[]
   subject: string
   body: string
+}
+
+interface EmailsSent {
+  email: string
+  status: string | Error
 }
 
 const transporter = nodemailer.createTransport({
@@ -17,12 +23,26 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify(err => console.log(err || 'nodemailer ready'))
 
-const mailThread = (ctx: any) => {
+const sendEmail = async (emailData: Mail.Options): Promise<EmailsSent> => {
+  return await new Promise(resolve => {
+    const email = emailData.to
+
+    return transporter.sendMail(emailData, (err, info) => {
+      const infoStatus = info.accepted.length > 0 ? 'accepted' : 'rejected'
+
+      resolve({ email: email.toString(), status: err || infoStatus })
+    })
+  })
+}
+
+const mailThread = async (ctx: any) => {
   const params = ctx.request.body
 
   const paramsLength = Object.keys(params).length
 
   const { recipients, subject, body }: Params = params
+
+  const emailSender = process.env.EMAIL_SENDER
 
   if (!recipients || !subject || !body) {
     return (ctx.body = {
@@ -49,9 +69,24 @@ const mailThread = (ctx: any) => {
     })
   }
 
+  const emailsSent: EmailsSent[] = []
+
+  for (const recipient of recipients) {
+    const emailData = {
+      from: emailSender,
+      to: recipient,
+      subject,
+      html: body,
+    }
+
+    await sendEmail(emailData).then((emailSent: EmailsSent) =>
+      emailsSent.push(emailSent)
+    )
+  }
+
   ctx.body = {
     success: true,
-    response: params,
+    response: emailsSent,
   }
 }
 
