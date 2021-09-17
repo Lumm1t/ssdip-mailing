@@ -1,3 +1,4 @@
+import { Context } from 'koa'
 import Nightmare from 'nightmare'
 
 interface Output {
@@ -133,7 +134,7 @@ const getDataFromPage = (): Promise<Output[]> => {
   })
 }
 
-const locationThread = async (ctx: any) => {
+const locationThread = async (ctx: Context) => {
   const params = ctx.request.body
 
   const selectedLocations: string[] = params.selectedLocations
@@ -187,7 +188,7 @@ const locationThread = async (ctx: any) => {
   }
 }
 
-const subjectsThread = async (ctx: any) => {
+const subjectsThread = async (ctx: Context) => {
   const params = ctx.request.body
 
   const selectedLocations: string[] = params.selectedLocations

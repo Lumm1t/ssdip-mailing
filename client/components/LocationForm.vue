@@ -41,7 +41,7 @@ export default Vue.extend({
     await this.updateSelect(-1, 'init')
   },
   methods: {
-    updateSelect(...args: any[]) {
+    updateSelect(...args: [number, string]) {
       const [index, selectedLocation] = args
 
       if (selectedLocation !== 'init') {

@@ -1,4 +1,5 @@
 import '../env'
+import { Context } from 'koa'
 import nodemailer from 'nodemailer'
 import Mail from 'nodemailer/lib/mailer'
 
@@ -35,7 +36,7 @@ const sendEmail = async (emailData: Mail.Options): Promise<EmailsSent> => {
   })
 }
 
-const mailThread = async (ctx: any) => {
+const mailThread = async (ctx: Context) => {
   const params = ctx.request.body
 
   const paramsLength = Object.keys(params).length
