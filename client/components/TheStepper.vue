@@ -25,14 +25,14 @@
       >
         <component :is="component" />
 
-        <v-btn v-if="!isStepFirst" @click="previousStep">Back</v-btn>
+        <v-btn v-if="!isStepFirst" @click="goToPreviousStep">Back</v-btn>
 
         <v-btn
           v-if="!isStepLast"
           color="primary"
           :disabled="!isLocationSelected || !areRecipientsLoaded"
           :loading="isLoading"
-          @click="nextStep"
+          @click="goToNextStep"
         >
           Next
         </v-btn>
@@ -44,7 +44,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { global, selectedLocations, emailData } from '../store'
+import { global, selectedLocations } from '../store'
 
 export default Vue.extend({
   name: 'TheStepper',
@@ -71,11 +71,24 @@ export default Vue.extend({
     },
   },
   methods: {
-    nextStep() {
-      if (!this.isStepLast) this.currentStep++
+    goToNextStep(): void {
+      const stepActionsMap = [this.selectLocations, this.writeEmailData]
+
+      const action = stepActionsMap[this.currentStep - 1]
+      if (action() && !this.isStepLast) {
+        this.currentStep++
+      }
     },
-    previousStep() {
+    goToPreviousStep(): void {
       if (!this.isStepFirst) this.currentStep--
+    },
+    selectLocations(): boolean {
+      return true
+    },
+    writeEmailData(): boolean {
+      this.$root.$emit('send-emails')
+
+      return false
     },
   },
 })
