@@ -25,7 +25,9 @@
       >
         <component :is="component" />
 
-        <v-btn v-if="!isStepFirst" @click="goToPreviousStep">Back</v-btn>
+        <v-btn v-if="!isStepFirst && !isStepLast" @click="goToPreviousStep">
+          Back
+        </v-btn>
 
         <v-btn
           v-if="!isStepLast"
