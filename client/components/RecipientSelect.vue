@@ -5,7 +5,7 @@
     :disabled="availableSubjects.length === 0"
     item-text="name"
     item-value="email"
-    label="recipients"
+    label="Recipients"
     multiple
   >
     <template #selection="{ index }">

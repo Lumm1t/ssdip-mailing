@@ -20,19 +20,19 @@ export default Vue.extend({
   data: () => ({
     availableLocations: [
       {
-        name: 'state',
+        name: 'State',
         options: [],
       },
       {
-        name: 'substate',
+        name: 'Substate',
         options: [],
       },
       {
-        name: 'community',
+        name: 'Community',
         options: [],
       },
       {
-        name: 'entity',
+        name: 'Entity',
         options: [],
       },
     ],
