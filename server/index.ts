@@ -27,3 +27,5 @@ app.use(router.routes()).use(router.allowedMethods())
 app.listen(port, () => {
   console.log(`koa is listening in ${port}`)
 })
+
+process.on('SIGINT', () => process.exit(1))
