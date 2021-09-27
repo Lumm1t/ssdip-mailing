@@ -1,3 +1,5 @@
+const { SERVER_ADDRESS, SERVER_PORT } = process.env
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -43,7 +45,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:5000',
+    baseURL: `${SERVER_ADDRESS}:${SERVER_PORT}`,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
