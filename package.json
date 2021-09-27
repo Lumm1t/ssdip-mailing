@@ -1,7 +1,16 @@
 {
-  "name": "mailing",
+  "name": "ssdip-mailing",
   "version": "1.0.0",
-  "private": true,
+  "description": "Webscrap emails from ssdip.bip.gov.pl and send massive messages",
+  "author": "Aleksander Szołowicz <aleksander.szolowicz@gmail.com> (https://github.com/Lumm1t)",
+  "license": "MIT",
+  "keywords": [
+    "ssdip.bip.gov.pl",
+    "ssdip",
+    "webscrap",
+    "email",
+    "mailer"
+  ],
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
