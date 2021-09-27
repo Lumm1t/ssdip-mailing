@@ -38,6 +38,18 @@
         >
           Next
         </v-btn>
+
+        <v-alert
+          v-if="error"
+          fluid
+          border="left"
+          dense
+          outlined
+          type="error"
+          style="margin-top: 15px; width: fit-content"
+        >
+          {{ error }}
+        </v-alert>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -70,6 +82,9 @@ export default Vue.extend({
     },
     areRecipientsLoaded(): boolean {
       return global.areRecipientsLoaded
+    },
+    error(): string {
+      return global.error
     },
   },
   methods: {

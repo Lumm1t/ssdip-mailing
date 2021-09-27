@@ -14,7 +14,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { selectedLocations } from '../store'
+import { global, selectedLocations } from '../store'
 
 export default Vue.extend({
   data: () => ({
@@ -55,6 +55,8 @@ export default Vue.extend({
       }
     },
     getAvailableLocations(index: number) {
+      global.resetError()
+
       this.$axios
         .post('/scraper/locations', {
           selectedLocations: selectedLocations.locations,
@@ -64,7 +66,7 @@ export default Vue.extend({
 
           if (success) {
             this.availableLocations[index + 1].options = response
-          } else alert(error)
+          } else global.setError(error)
         })
     },
     resetSelects(properPosition: number) {

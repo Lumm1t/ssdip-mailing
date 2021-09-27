@@ -82,6 +82,7 @@ export default Vue.extend({
     },
     getAvailableSubjects() {
       this.resetRecipients()
+      global.resetError()
 
       global.waitForAvailableSubjects(true)
       global.recipientsLoaded(false)
@@ -97,7 +98,7 @@ export default Vue.extend({
             this.availableSubjects = response
 
             global.recipientsLoaded(true)
-          } else alert(error)
+          } else global.setError(error)
 
           global.waitForAvailableSubjects(false)
         })

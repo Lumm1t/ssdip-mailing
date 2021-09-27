@@ -8,6 +8,7 @@ import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 export default class Global extends VuexModule {
   isWaitingForAvailableSubjects = false as boolean
   areRecipientsLoaded = false as boolean
+  error = '' as string
 
   @Mutation
   waitForAvailableSubjects(isWaiting: boolean) {
@@ -17,5 +18,15 @@ export default class Global extends VuexModule {
   @Mutation
   recipientsLoaded(areLoaded: boolean) {
     this.areRecipientsLoaded = areLoaded
+  }
+
+  @Mutation
+  setError(err: string) {
+    this.error = err
+  }
+
+  @Mutation
+  resetError() {
+    this.error = ''
   }
 }

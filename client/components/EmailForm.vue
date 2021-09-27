@@ -11,7 +11,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { emailData } from '../store'
+import { emailData, global } from '../store'
 
 export default Vue.extend({
   name: 'EmailForm',
@@ -38,6 +38,8 @@ export default Vue.extend({
   },
   methods: {
     sendEmails() {
+      global.resetError()
+
       this.$axios
         .post('/mailer/send', {
           recipients: emailData.recipients[0],
@@ -49,7 +51,7 @@ export default Vue.extend({
 
           if (success) {
             emailData.setResponse(response)
-          } else alert(error)
+          } else global.setError(error)
         })
     },
   },
