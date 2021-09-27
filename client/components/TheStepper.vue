@@ -32,7 +32,9 @@
         <v-btn
           v-if="!isStepLast"
           color="primary"
-          :disabled="!isLocationSelected || !areRecipientsLoaded"
+          :disabled="
+            !isLocationSelected || !areRecipientsLoaded || !isEmailDataFilled
+          "
           :loading="isLoading"
           @click="goToNextStep"
         >
@@ -58,7 +60,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { global, selectedLocations } from '../store'
+import { emailData, global, selectedLocations } from '../store'
 
 export default Vue.extend({
   name: 'TheStepper',
@@ -80,6 +82,12 @@ export default Vue.extend({
     isLoading(): boolean {
       return global.isWaitingForAvailableSubjects
     },
+    isEmailDataFilled() {
+      // validate only email data step
+      if (this.currentStep !== 2) return true
+
+      return emailData.validate
+    },
     areRecipientsLoaded(): boolean {
       return global.areRecipientsLoaded
     },
@@ -100,9 +108,11 @@ export default Vue.extend({
       if (!this.isStepFirst) this.currentStep--
     },
     selectLocations(): boolean {
-      return true
+      return this.isLocationSelected && this.areRecipientsLoaded
     },
     writeEmailData(): boolean {
+      if (this.isEmailDataFilled === false) return false
+
       this.$root.$emit('send-emails')
 
       return true

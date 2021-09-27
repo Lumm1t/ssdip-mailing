@@ -52,4 +52,17 @@ export default class EmailData extends VuexModule {
   get response() {
     return this.emailsResponse
   }
+
+  get validate() {
+    const { selectedRecipients, emailTopic, emailBody } = this
+
+    const defaultEmailBody = '<p></p>'
+
+    return (
+      selectedRecipients[0]?.length > 0 &&
+      emailTopic &&
+      emailBody &&
+      emailBody !== defaultEmailBody
+    )
+  }
 }
