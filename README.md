@@ -1,69 +1,81 @@
-# mailing
+<div align="center">
+  <h1>ssdip-mailing</h1>
 
-## Build Setup
+  <h5>
+    Webscrap emails from <a href="https://ssdip.bip.gov.pl/search/graphsubjects/">SSDIP</a> and send massive messages
+  </h5>
+</div>
+
+## Overview
+
+###### \*click for larger images size\*
+
+Server is scraping data from [ssdip.bip.gov.pl](https://ssdip.bip.gov.pl/search/graphsubjects/) based on client-side form
+[<img width="800" src="https://i.imgur.com/d3BxQxr.png" alt="ssdip-mailing-location-form">](https://i.imgur.com/d3BxQxr.png)
+
+Scraped emails are provided to `recipients select`
+[<img width="800" src="https://i.imgur.com/vnA15JL.png" alt="ssdip-mailing-recipients">](https://i.imgur.com/vnA15JL.png)
+
+User can fill email topic and body - HTML format is supported!
+[<img width="800" src="https://i.imgur.com/pfWmULW.png" alt="ssdip-mailing-emails-form">](https://i.imgur.com/pfWmULW.png)
+
+Server is sending emails, user can see response
+[<img width="800" src="https://i.imgur.com/63NCzMX.png" alt="ssdip-mailing-emails-info">](https://i.imgur.com/63NCzMX.png)
+
+##### It was made using:
+
+- [Node](https://nodejs.org/)
+- [Koa](https://koajs.com/) - back-end/server
+- [Nightmare](https://github.com/segmentio/nightmare) - webscrap
+- [Vue, Nuxt](https://nuxtjs.org/) - front-end
+- [Vuetify](https://vuetifyjs.com/) - UI Library
+- [Nodemailer](https://nodemailer.com/) - node module for sending emails
+- [TipTap-Vuetify](https://github.com/iliyaZelenko/tiptap-vuetify) - WYSIWYG editor for Vuetify
+- [TypeScript](https://www.typescriptlang.org/)
+
+### Prerequisites to build
+
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/)
+
+### Getting Started
 
 ```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
+# Clone repo
+git clone https://github.com/Lumm1t/ssdip-mailing.git
+cd ssdip-mailing/
+yarn # or npm install
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+Change environment variables:
 
-## Special Directories
+1. Rename `.env.example` to `.env`
+2. Fill required data
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+### Run back-end
 
-### `assets`
+```bash
+yarn server # or npm run server
+```
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+### Run front-end
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+#### Development
 
-### `components`
+```bash
+yarn dev # or npm run dev
+```
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+#### Production
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+```bash
+yarn build # or npm run build
+yarn start # or npm run start
+```
 
-### `layouts`
+### Contributing
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+Just contribute!
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+### License
 
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+[This project is licensed under the MIT License.](https://choosealicense.com/licenses/mit/)
