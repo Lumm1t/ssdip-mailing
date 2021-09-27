@@ -44,10 +44,12 @@ export default Vue.extend({
           subject: emailData.topic,
           body: emailData.body,
         })
-        .then(data => {
-          if (data.data.success) {
-            emailData.setResponse(data.data.response)
-          } else alert(data.data.error)
+        .then(({ data }) => {
+          const { success, response, error } = data
+
+          if (success) {
+            emailData.setResponse(response)
+          } else alert(error)
         })
     },
   },

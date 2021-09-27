@@ -59,10 +59,12 @@ export default Vue.extend({
         .post('/scraper/locations', {
           selectedLocations: selectedLocations.locations,
         })
-        .then(data => {
-          if (data.data.success) {
-            this.availableLocations[index + 1].options = data.data.response
-          } else alert(data.data.error)
+        .then(({ data }) => {
+          const { success, response, error } = data
+
+          if (success) {
+            this.availableLocations[index + 1].options = response
+          } else alert(error)
         })
     },
     resetSelects(properPosition: number) {

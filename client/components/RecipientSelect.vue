@@ -90,12 +90,14 @@ export default Vue.extend({
         .post('/scraper/subjects', {
           selectedLocations: selectedLocations.locations,
         })
-        .then(data => {
-          if (data.data.success) {
-            this.availableSubjects = data.data.response
+        .then(({ data }) => {
+          const { success, response, error } = data
+
+          if (success) {
+            this.availableSubjects = response
 
             global.recipientsLoaded(true)
-          } else alert(data.data.error)
+          } else alert(error)
 
           global.waitForAvailableSubjects(false)
         })
