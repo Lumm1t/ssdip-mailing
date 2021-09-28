@@ -8,18 +8,25 @@ interface Output {
 
 const SSDIP = 'https://ssdip.bip.gov.pl/search/graphsubjects/'
 
-const nightmare = new Nightmare({
-  show: false,
-})
+const nightmareOptions = {
+  show: true,
+}
 
-nightmare
-  .goto(SSDIP)
-  .then(() => console.log('nightmare ready'))
-  .catch(error => console.error(error))
+const startNightmare = (): any => new Nightmare(nightmareOptions)
 
-const getLocation = (inputName: string): Promise<string[]> => {
+const prepareNightmare = async (instance: Nightmare) => {
+  await instance
+    .goto(SSDIP)
+    .then(() => console.log('nightmare ready'))
+    .catch(error => console.error(error))
+}
+
+const getLocation = (
+  instance: Nightmare,
+  inputName: string
+): Promise<string[]> => {
   return new Promise((resolve, reject) => {
-    nightmare
+    instance
       // @ts-ignore
       .evaluate((inputName: string) => {
         // @ts-ignore
@@ -35,12 +42,16 @@ const getLocation = (inputName: string): Promise<string[]> => {
   })
 }
 
-const setLocation = (inputName: string, value: string): Promise<void> => {
+const setLocation = (
+  instance: Nightmare,
+  inputName: string,
+  value: string
+): Promise<void> => {
   return new Promise((resolve, reject) => {
-    nightmare
+    instance
       .select(`select[id*='${inputName}']`, value)
       .then(async () => {
-        await clickSearchButton()
+        await clickSearchButton(instance)
 
         resolve()
       })
@@ -48,9 +59,9 @@ const setLocation = (inputName: string, value: string): Promise<void> => {
   })
 }
 
-const clickSearchButton = (): Promise<void> => {
+const clickSearchButton = (instance: Nightmare): Promise<void> => {
   return new Promise((resolve, reject) => {
-    nightmare
+    instance
       .click('input[value=Szukaj]')
       .evaluate(() => document.querySelector('form#SearchSubjectForm').remove())
       .wait('form#SearchSubjectForm')
@@ -59,9 +70,9 @@ const clickSearchButton = (): Promise<void> => {
   })
 }
 
-const isDataAvailable = (): Promise<boolean> => {
+const isDataAvailable = (instance: Nightmare): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    return nightmare
+    return instance
       .wait('h3.w_sz')
       .evaluate(() => document.querySelector('table.wyniki_szukania') !== null)
       .then(resolve)
@@ -69,9 +80,9 @@ const isDataAvailable = (): Promise<boolean> => {
   })
 }
 
-const isDataOnFewPages = (): Promise<boolean> => {
+const isDataOnFewPages = (instance: Nightmare): Promise<boolean> => {
   return new Promise((resolve, reject) => {
-    return nightmare
+    return instance
       .wait('h3.w_sz')
       .evaluate(() => document.querySelector('a.last') !== null)
       .then(resolve)
@@ -79,9 +90,9 @@ const isDataOnFewPages = (): Promise<boolean> => {
   })
 }
 
-const getPagesLength = (): Promise<number> => {
+const getPagesLength = (instance: Nightmare): Promise<number> => {
   return new Promise((resolve, reject) => {
-    nightmare
+    instance
       .click('a.last')
       .evaluate(() => {
         const pagesLength = document.querySelector('span.current')?.textContent
@@ -98,9 +109,9 @@ const getPagesLength = (): Promise<number> => {
   })
 }
 
-const getDataFromPage = (): Promise<Output[]> => {
+const getDataFromPage = (instance: Nightmare): Promise<Output[]> => {
   return new Promise((resolve, reject) => {
-    nightmare
+    instance
       .evaluate(() => {
         const output: Output[] = []
 
@@ -169,22 +180,29 @@ const locationThread = async (ctx: Context) => {
     })
   }
 
+  const instance = startNightmare()
+  await prepareNightmare(instance)
+
   if (selectedLocations.length === 0) {
     return (ctx.body = {
       success: true,
-      response: await getLocation(availableLocations[searchIndex]),
+      response: await getLocation(instance, availableLocations[searchIndex]),
     })
   }
 
   for (const selectedLocation of selectedLocations) {
-    await setLocation(availableLocations[searchIndex], selectedLocation)
+    await setLocation(
+      instance,
+      availableLocations[searchIndex],
+      selectedLocation
+    )
 
     ++searchIndex
   }
 
   ctx.body = {
     success: true,
-    response: await getLocation(availableLocations[searchIndex]),
+    response: await getLocation(instance, availableLocations[searchIndex]),
   }
 }
 
@@ -221,11 +239,14 @@ const subjectsThread = async (ctx: Context) => {
     })
   }
 
-  for (const [index, selectedLocation] of selectedLocations.entries())
-    await setLocation(availableLocations[index], selectedLocation)
+  const instance = startNightmare()
+  await prepareNightmare(instance)
 
-  const dataAvailable = await isDataAvailable()
-  const dataOnFewPages = await isDataOnFewPages()
+  for (const [index, selectedLocation] of selectedLocations.entries())
+    await setLocation(instance, availableLocations[index], selectedLocation)
+
+  const dataAvailable = await isDataAvailable(instance)
+  const dataOnFewPages = await isDataOnFewPages(instance)
 
   const output = []
 
@@ -237,19 +258,19 @@ const subjectsThread = async (ctx: Context) => {
   }
 
   if (dataOnFewPages === true) {
-    const pagesLength = await getPagesLength()
+    const pagesLength = await getPagesLength(instance)
 
     for (let i = 1; i <= pagesLength; ++i) {
       console.log(`Current page: ${i}/${pagesLength}`)
 
-      const pageOutput = await getDataFromPage()
+      const pageOutput = await getDataFromPage(instance)
 
       output.push(...pageOutput)
 
-      if (i !== pagesLength) nightmare.click('a.next')
+      if (i !== pagesLength) instance.click('a.next')
     }
   } else {
-    const pageOutput = await getDataFromPage()
+    const pageOutput = await getDataFromPage(instance)
 
     output.push(...pageOutput)
   }
