@@ -9,10 +9,12 @@ interface Output {
 const SSDIP = 'https://ssdip.bip.gov.pl/search/graphsubjects/'
 
 const nightmareOptions = {
-  show: true,
+  show: false,
 }
 
 const startNightmare = (): any => new Nightmare(nightmareOptions)
+
+const endNightmare = async (instance: Nightmare) => await instance.end()
 
 const prepareNightmare = async (instance: Nightmare) => {
   await instance
@@ -183,6 +185,8 @@ const locationThread = async (ctx: Context) => {
   const instance = startNightmare()
   await prepareNightmare(instance)
 
+  ctx.res.on('finish', async () => await endNightmare(instance))
+
   if (selectedLocations.length === 0) {
     return (ctx.body = {
       success: true,
@@ -241,6 +245,8 @@ const subjectsThread = async (ctx: Context) => {
 
   const instance = startNightmare()
   await prepareNightmare(instance)
+
+  ctx.res.on('finish', async () => await endNightmare(instance))
 
   for (const [index, selectedLocation] of selectedLocations.entries())
     await setLocation(instance, availableLocations[index], selectedLocation)
