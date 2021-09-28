@@ -33,6 +33,11 @@ export default Vue.extend({
   data: () => ({
     selectedLocation: undefined,
   }),
+  watch: {
+    options(val) {
+      if (val.length === 0) this.selectedLocation = 0
+    },
+  },
   methods: {
     emitSelectedLocation() {
       this.$emit('selected-location', this.index, this.selectedLocation)
