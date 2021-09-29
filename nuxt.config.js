@@ -3,14 +3,29 @@ const { SERVER_ADDRESS, SERVER_PORT } = process.env
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'mailing',
+    title: 'SSDIP Mailing',
     htmlAttrs: {
       lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Get a list of mails from SSDIP and send messages to them',
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content: 'SSDIP, webscrap, emails, mailing',
+      },
+      {
+        hid: 'author',
+        name: 'author',
+        content:
+          'Aleksander Szołowicz <aleksander.szolowicz@gmail.com> (https://github.com/Lumm1t)',
+      },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
