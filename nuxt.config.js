@@ -36,6 +36,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    // https://www.npmjs.com/package/vuex-persist
+    { src: '~/plugins/vuex-persist', mode: 'client' },
     // https://github.com/iliyaZelenko/tiptap-vuetify-nuxt
     { src: '~/plugins/tiptap-vuetify', mode: 'client' },
   ],
