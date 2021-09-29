@@ -1,10 +1,13 @@
 /* eslint-disable import/no-named-as-default */
-
-import { Store } from 'vuex'
 import VuexPersistence from 'vuex-persist'
+import { Context } from '@nuxt/types'
+import { State } from '~/client/types/store'
 
-interface Plugin {
-  store: Store<any>
-}
-
-export default ({ store }: Plugin) => new VuexPersistence().plugin(store)
+export default ({ store }: Context) =>
+  new VuexPersistence({
+    reducer: (state: State) => ({
+      global: {
+        darkTheme: state.global.darkTheme,
+      },
+    }),
+  }).plugin(store)
