@@ -57,6 +57,8 @@ export default Vue.extend({
     getAvailableLocations(index: number) {
       global.resetError()
 
+      global.waitForAvailableLocations(true)
+
       this.$axios
         .post('/scraper/locations', {
           selectedLocations: selectedLocations.locations,
@@ -67,6 +69,8 @@ export default Vue.extend({
           if (success) {
             this.availableLocations[index + 1].options = response
           } else global.setError(error)
+
+          global.waitForAvailableLocations(false)
         })
     },
     resetSelects(properPosition: number) {
