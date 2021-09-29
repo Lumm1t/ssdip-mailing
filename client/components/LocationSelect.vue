@@ -3,7 +3,7 @@
     v-model="selectedLocation"
     :disabled="options.length === 0"
     :loading="isLoading"
-    :item-disabled="() => isWaitingForLocations"
+    :item-disabled="() => isWaitingForLocations || isWaitingForSubjects"
     item-text="text"
     item-value="value"
     :label="name"
@@ -44,6 +44,9 @@ export default Vue.extend({
   computed: {
     isWaitingForLocations(): boolean {
       return global.isWaitingForAvailableLocations
+    },
+    isWaitingForSubjects(): boolean {
+      return global.isWaitingForAvailableSubjects
     },
   },
   watch: {
