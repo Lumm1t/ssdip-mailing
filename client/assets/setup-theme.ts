@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Mutation, State } from '~/client/types/store'
+import { Mutation, State } from 'store'
 
 export default function setupTheme(this: Vue) {
   this.$vuetify.theme.dark = this.$store.state.global.darkTheme
