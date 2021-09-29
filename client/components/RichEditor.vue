@@ -4,10 +4,10 @@
       class="mt-4 mb-8"
       :value="value"
       :extensions="extensions"
-      placeholder="Write something..."
       :toolbar-attributes="{
-        color: 'grey lighten-4',
+        color: $vuetify.theme.dark ? 'grey darken-2' : 'grey lighten-4',
       }"
+      placeholder="Write something..."
       @input="$emit('input', arguments[0])"
     />
 
