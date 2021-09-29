@@ -15,6 +15,18 @@ const router = new KoaRouter()
 app.use(cors())
 app.use(KoaBodyparser())
 
+// show request & response time
+app.use(async (ctx, next) => {
+  const { method, url } = ctx
+  const start = Date.now()
+
+  await next()
+
+  const ms = Date.now() - start
+
+  console.log(`${method} ${url} - ${ms}ms`)
+})
+
 app.on('error', (err: Error) => {
   console.log(`server error! ${err}`)
 })
