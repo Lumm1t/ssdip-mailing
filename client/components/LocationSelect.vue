@@ -2,7 +2,8 @@
   <v-select
     v-model="selectedLocation"
     :disabled="options.length === 0"
-    :item-disabled="() => isLoading"
+    :loading="isLoading"
+    :item-disabled="() => isWaitingForLocations"
     item-text="text"
     item-value="value"
     :label="name"
@@ -32,12 +33,16 @@ export default Vue.extend({
       type: Number,
       required: true,
     },
+    isLoading: {
+      type: Boolean,
+      required: true,
+    },
   },
   data: () => ({
     selectedLocation: undefined,
   }),
   computed: {
-    isLoading(): boolean {
+    isWaitingForLocations(): boolean {
       return global.isWaitingForAvailableLocations
     },
   },

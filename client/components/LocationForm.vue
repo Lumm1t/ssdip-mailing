@@ -6,6 +6,7 @@
       :name="location.name"
       :options="location.options"
       :index="i"
+      :is-loading="location.isLoading"
       @selected-location="updateSelect"
     />
   </v-form>
@@ -22,18 +23,22 @@ export default Vue.extend({
       {
         name: 'State',
         options: [],
+        isLoading: false,
       },
       {
         name: 'Substate',
         options: [],
+        isLoading: false,
       },
       {
         name: 'Community',
         options: [],
+        isLoading: false,
       },
       {
         name: 'Entity',
         options: [],
+        isLoading: false,
       },
     ],
   }),
@@ -55,9 +60,13 @@ export default Vue.extend({
       }
     },
     getAvailableLocations(index: number) {
+      const nextSelect = this.availableLocations[index + 1]
+
       global.resetError()
 
       global.waitForAvailableLocations(true)
+
+      nextSelect.isLoading = true
 
       this.$axios
         .post('/scraper/locations', {
@@ -67,10 +76,12 @@ export default Vue.extend({
           const { success, response, error } = data
 
           if (success) {
-            this.availableLocations[index + 1].options = response
+            nextSelect.options = response
           } else global.setError(error)
 
           global.waitForAvailableLocations(false)
+
+          nextSelect.isLoading = false
         })
     },
     resetSelects(properPosition: number) {
