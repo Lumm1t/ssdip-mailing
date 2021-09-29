@@ -35,7 +35,7 @@
           :disabled="
             !isLocationSelected || !areRecipientsLoaded || !isEmailDataFilled
           "
-          :loading="isLoading"
+          :loading="isWaitingForSubjects"
           @click="goToNextStep"
         >
           Next
@@ -79,7 +79,7 @@ export default Vue.extend({
     isLocationSelected(): boolean {
       return selectedLocations.length === 4
     },
-    isLoading(): boolean {
+    isWaitingForSubjects(): boolean {
       return global.isWaitingForAvailableSubjects
     },
     isEmailDataFilled() {
