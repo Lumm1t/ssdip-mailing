@@ -13,7 +13,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { global } from '../store'
-import setupTheme from '~/assets/setup-theme'
+import setupTheme from '../assets/setup-theme'
 
 export default Vue.extend({
   name: 'ThemeBtn',
