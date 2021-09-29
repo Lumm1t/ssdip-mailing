@@ -6,9 +6,15 @@ import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
   namespaced: true,
 })
 export default class Global extends VuexModule {
+  isWaitingForAvailableLocations = false as boolean
   isWaitingForAvailableSubjects = false as boolean
   areRecipientsLoaded = false as boolean
   error = '' as string
+
+  @Mutation
+  waitForAvailableLocations(isWaiting: boolean) {
+    this.isWaitingForAvailableLocations = isWaiting
+  }
 
   @Mutation
   waitForAvailableSubjects(isWaiting: boolean) {
