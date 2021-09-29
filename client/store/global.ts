@@ -6,10 +6,16 @@ import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
   namespaced: true,
 })
 export default class Global extends VuexModule {
+  darkTheme = false as boolean
   isWaitingForAvailableLocations = false as boolean
   isWaitingForAvailableSubjects = false as boolean
   areRecipientsLoaded = false as boolean
   error = '' as string
+
+  @Mutation
+  changeTheme() {
+    this.darkTheme = !this.darkTheme
+  }
 
   @Mutation
   waitForAvailableLocations(isWaiting: boolean) {
