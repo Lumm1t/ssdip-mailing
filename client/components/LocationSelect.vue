@@ -2,6 +2,7 @@
   <v-select
     v-model="selectedLocation"
     :disabled="options.length === 0"
+    :item-disabled="() => isLoading"
     item-text="text"
     item-value="value"
     :label="name"
@@ -13,6 +14,8 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
+
+import { global } from '../store'
 
 export default Vue.extend({
   name: 'LocationSelect',
@@ -33,6 +36,11 @@ export default Vue.extend({
   data: () => ({
     selectedLocation: undefined,
   }),
+  computed: {
+    isLoading(): boolean {
+      return global.isWaitingForAvailableLocations
+    },
+  },
   watch: {
     options(val) {
       if (val.length === 0) this.selectedLocation = 0
