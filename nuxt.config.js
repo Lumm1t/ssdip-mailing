@@ -1,4 +1,4 @@
-const { SERVER_ADDRESS, SERVER_PORT } = process.env
+const { FRONT_PORT, SERVER_ADDRESS, SERVER_PORT } = process.env
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -62,12 +62,16 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: `${SERVER_ADDRESS}:${SERVER_PORT}`,
+    baseURL: `${SERVER_ADDRESS || 'http://localhost'}:${SERVER_PORT || 5000}`,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['vuetify/lib', 'tiptap-vuetify'],
+  },
+
+  server: {
+    port: FRONT_PORT || 3000,
   },
 
   // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-srcdir
