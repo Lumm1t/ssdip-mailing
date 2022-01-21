@@ -67,7 +67,7 @@
     "eslint-plugin-vue": "^7.18.0",
     "eslint-plugin-vue-a11y": "^0.0.31",
     "husky": "^7.0.2",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^12.2.2",
     "nodemon": "^2.0.13",
     "prettier": "^2.3.2",
     "stylelint": "^13.13.1",
